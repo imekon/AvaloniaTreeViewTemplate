@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaTreeViewTemplates.ViewModels"
+		xmlns:scg="using:System.Collections.Generic"
+		xmlns:helpers="using:AvaloniaTreeViewTemplates.Helpers"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaTreeViewTemplates.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaTreeViewTemplates">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<TreeView Items="{Binding Things}">
+		<TreeView.Items>
+			<scg:List x:TypeArguments="vm:ThingViewModel">
+				<vm:ThingViewModel Template="Folder"/>
+				<vm:ThingViewModel Template="Thing"/>
+			</scg:List>
+		</TreeView.Items>
+		<TreeView.DataTemplates>
+			<helpers:ThingTemplateSelector>
+				<TreeDataTemplate x:Key="Folder" ItemsSource="{Binding Children}">
+					<TextBlock Text="{Binding Name}"/>
+				</TreeDataTemplate>
+				<TreeDataTemplate x:Key="Thing">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Name}"/>
+						<TextBlock Text="{Binding Address}"/>
+					</StackPanel>
+				</TreeDataTemplate>
+			</helpers:ThingTemplateSelector>
+		</TreeView.DataTemplates>
+	</TreeView>
+
+</Window>
